@@ -11,6 +11,11 @@ import { GetUserHandler } from '../../application/queries/get-user/get-user.hand
 import { GetAllUsersHandler } from '../../application/queries/get-all-users/get-all-users.handler';
 import { UserController } from '../../api/controllers/user.controller';
 
+import { PASSWORD_HASHER_PORT } from 'src/domain/ports/outbound/password-hasher.port';
+import { USER_OUTPUT_PORT } from 'src/domain/ports/outbound/user.output.port';
+
+import { Argon2PasswordHasherRepository } from '../adapters/argon2-password-hasher.repository';
+
 
 const CommandHandlers = [CreateUserHandler, UpdateUserHandler, DeleteUserHandler];
 const QueryHandlers = [ GetAllUsersHandler, GetUserHandler];
@@ -27,6 +32,10 @@ const QueryHandlers = [ GetAllUsersHandler, GetUserHandler];
         {
             provide: 'IUserOutputPort',
             useClass: UserRepository,
+        },
+        {
+            provide: PASSWORD_HASHER_PORT, 
+            useClass: Argon2PasswordHasherRepository,
         },
     ],
 })

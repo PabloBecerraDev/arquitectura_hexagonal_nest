@@ -20,7 +20,7 @@ export class UserController {
     @Post()
     async create(@Body() dto: CreateUserDto) {
         return this.commandBus.execute(
-            new CreateUserCommand(uuidv4(), dto.username, dto.password)
+            new CreateUserCommand(uuidv4(), dto.email, dto.username, dto.password)
         );
     }
 

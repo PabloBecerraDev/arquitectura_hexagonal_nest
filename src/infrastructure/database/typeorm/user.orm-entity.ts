@@ -6,6 +6,9 @@ export class UserOrmEntity {
     @PrimaryColumn()
     id: string;
 
+    @Column({unique: true, nullable:true})
+    email: string;
+
     @Column({ unique: true })
     username: string;
 

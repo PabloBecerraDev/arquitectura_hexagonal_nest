@@ -22,12 +22,13 @@ export class UserRepository extends GenericRepository<User, UserOrmEntity> imple
     protected toOrm(user: User): UserOrmEntity {
         const orm = new UserOrmEntity();
         orm.id = user.id;
+        orm.email = user.email;
         orm.username = user.username;
         orm.password = user.password;
         return orm;
     }
 
     protected toDomain(orm: UserOrmEntity): User {
-        return new User(orm.id, orm.username, orm.password, orm.createdAt);
+        return new User(orm.id, orm.email,orm.username, orm.password, orm.createdAt);
     }
 }

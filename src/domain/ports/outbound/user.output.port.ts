@@ -8,3 +8,5 @@ export interface IUserOutputPort {
     update(user: User): Promise<User>;
     delete(id: string): Promise<void>;
 }
+
+export const USER_OUTPUT_PORT = 'USER_OUTPUT_PORT';
