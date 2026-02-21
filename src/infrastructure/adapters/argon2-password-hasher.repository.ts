@@ -6,8 +6,8 @@ import { PasswordHasherPort } from 'src/domain/ports/outbound/password-hasher.po
 export class Argon2PasswordHasherRepository implements PasswordHasherPort {
   async hash(password: string): Promise<string> {
     return await argon2.hash(password, {
-      type: argon2.argon2id, // más seguro, combina argon2i y argon2d
-      memoryCost: 2 ** 16,   // 64MB
+      type: argon2.argon2id, 
+      memoryCost: 2 ** 16,   
       timeCost: 3,
       parallelism: 1,
     });

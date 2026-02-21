@@ -1,16 +1,31 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import 'dotenv/config';
-
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-   app.useGlobalPipes(new ValidationPipe({
-        whitelist: true,        // elimina campos que no están en el DTO
-        forbidNonWhitelisted: true, // lanza error si llegan campos extra
-        transform: true,        // transforma los tipos automáticamente
-    }));
+
+  const isDevelopment = process.env.NODE_ENV === 'development';
+
+  app.enableCors(
+    isDevelopment
+      ? { origin: '*' } // desarrollo: cualquier dominio
+      : {
+          origin: [
+            'https://tu-frontend.com', // reemplaza con tu dominio de producción
+          ],
+          methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+          allowedHeaders: ['Content-Type', 'Authorization'],
+          credentials: true,
+        },
+  );
+
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
+  }));
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
