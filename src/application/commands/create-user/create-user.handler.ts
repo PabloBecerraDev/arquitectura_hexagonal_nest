@@ -3,14 +3,14 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { CreateUserCommand } from './create-user.command';
-import { IUserOutputPort } from '../../../domain/ports/outbound/user.output.port';
+import { IUserOutputPort, USER_OUTPUT_PORT } from '../../../domain/ports/outbound/user.output.port';
 import { User } from '../../../domain/entities/user.entity';
 import { PASSWORD_HASHER_PORT, PasswordHasherPort } from '../../../domain/ports/outbound/password-hasher.port';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     constructor(
-        @Inject('IUserOutputPort')
+        @Inject(USER_OUTPUT_PORT)
         private readonly userOutputPort: IUserOutputPort,
 
         @Inject(PASSWORD_HASHER_PORT)

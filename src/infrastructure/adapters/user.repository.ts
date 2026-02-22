@@ -19,6 +19,14 @@ export class UserRepository extends GenericRepository<User, UserOrmEntity> imple
         return user ? this.toDomain(user) : null;
     }
 
+    async findByEmail(email: string): Promise<User | null> {
+        const user = await this.repository.findOne({
+            where: { email },
+        });
+
+        return user ? this.toDomain(user) : null;
+    }
+
     protected toOrm(user: User): UserOrmEntity {
         const orm = new UserOrmEntity();
         orm.id = user.id;

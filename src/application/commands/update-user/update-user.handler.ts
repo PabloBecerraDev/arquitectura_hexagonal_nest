@@ -2,13 +2,13 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject, NotFoundException } from '@nestjs/common';
 import { UpdateUserCommand } from './update-user.command';
-import { IUserOutputPort } from '../../../domain/ports/outbound/user.output.port';
+import { IUserOutputPort, USER_OUTPUT_PORT } from '../../../domain/ports/outbound/user.output.port';
 import { User } from '../../../domain/entities/user.entity';
 
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
     constructor(
-        @Inject('IUserOutputPort')
+        @Inject(USER_OUTPUT_PORT)
         private readonly userOutputPort: IUserOutputPort
     ) {}
 

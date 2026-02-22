@@ -2,12 +2,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject, NotFoundException } from '@nestjs/common';
 import { DeleteUserCommand } from './delete-user.command';
-import { IUserOutputPort } from '../../../domain/ports/outbound/user.output.port';
+import { IUserOutputPort, USER_OUTPUT_PORT } from '../../../domain/ports/outbound/user.output.port';
 
 @CommandHandler(DeleteUserCommand)
 export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
     constructor(
-        @Inject('IUserOutputPort')
+        @Inject(USER_OUTPUT_PORT)
         private readonly userOutputPort: IUserOutputPort
     ) {}
 

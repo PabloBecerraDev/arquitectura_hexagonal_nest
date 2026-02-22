@@ -8,6 +8,7 @@ import { CreateUserHandler } from '../../application/commands/create-user/create
 import { UpdateUserHandler } from '../../application/commands/update-user/update-user.handler';
 import { DeleteUserHandler } from '../../application/commands/delete-user/delete-user.handler';
 import { GetUserHandler } from '../../application/queries/get-user/get-user.handler';
+import { GetUserByEmailHandler } from '../../application/queries/get-user-by-email/get-user-by-email.handler';
 import { GetAllUsersHandler } from '../../application/queries/get-all-users/get-all-users.handler';
 import { UserController } from '../../api/controllers/user.controller';
 
@@ -18,7 +19,7 @@ import { Argon2PasswordHasherRepository } from '../adapters/argon2-password-hash
 
 
 const CommandHandlers = [CreateUserHandler, UpdateUserHandler, DeleteUserHandler];
-const QueryHandlers = [ GetAllUsersHandler, GetUserHandler];
+const QueryHandlers = [ GetAllUsersHandler, GetUserHandler, GetUserByEmailHandler];
 
 @Module({
     imports: [
@@ -30,7 +31,7 @@ const QueryHandlers = [ GetAllUsersHandler, GetUserHandler];
         ...CommandHandlers,
         ...QueryHandlers,
         {
-            provide: 'IUserOutputPort',
+            provide: USER_OUTPUT_PORT,
             useClass: UserRepository,
         },
         {
@@ -38,5 +39,6 @@ const QueryHandlers = [ GetAllUsersHandler, GetUserHandler];
             useClass: Argon2PasswordHasherRepository,
         },
     ],
+    exports: [USER_OUTPUT_PORT, PASSWORD_HASHER_PORT],
 })
 export class UserModule {}

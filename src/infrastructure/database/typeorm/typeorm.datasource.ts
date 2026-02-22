@@ -1,8 +1,7 @@
-// src/infrastructure/database/typeorm/typeorm.datasource.ts
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 import { UserOrmEntity } from './user.orm-entity';
-
+import { RefreshTokenOrmEntity } from './refresh-token.orm-entity';  
 config();
 
 export const AppDataSource = new DataSource({
@@ -13,6 +12,6 @@ export const AppDataSource = new DataSource({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     ssl: { rejectUnauthorized: false },
-    entities: [UserOrmEntity],
+    entities: [UserOrmEntity, RefreshTokenOrmEntity],  
     migrations: ['src/infrastructure/database/migrations/*.ts'],
 });
